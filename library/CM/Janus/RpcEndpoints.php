@@ -16,6 +16,10 @@ class CM_Janus_RpcEndpoints {
      * @throws Exception
      */
     public static function rpc_publish($serverKey, $streamChannelKey, $streamKey, $start, $data) {
+        $serverKey = (string) $serverKey;
+        $streamChannelKey = (string) $streamChannelKey;
+        $streamKey = (string) $streamKey;
+
         $janus = CM_Service_Manager::getInstance()->getJanus('janus');
         self::_authenticate($janus, $serverKey);
 
@@ -55,6 +59,9 @@ class CM_Janus_RpcEndpoints {
      * @throws CM_Exception_NotAllowed
      */
     public static function rpc_subscribe($serverKey, $streamChannelKey, $streamKey, $start, $data) {
+        $serverKey = (string) $serverKey;
+        $streamChannelKey = (string) $streamChannelKey;
+        $streamKey = (string) $streamKey;
 
         $janus = CM_Service_Manager::getInstance()->getJanus('janus');
         self::_authenticate($janus, $serverKey);
@@ -85,6 +92,10 @@ class CM_Janus_RpcEndpoints {
      * @throws CM_Exception_Invalid
      */
     public static function rpc_removeStream($serverKey, $streamChannelKey, $streamKey) {
+        $serverKey = (string) $serverKey;
+        $streamChannelKey = (string) $streamChannelKey;
+        $streamKey = (string) $streamKey;
+
         $janus = CM_Service_Manager::getInstance()->getJanus('janus');
         self::_authenticate($janus, $serverKey);
 

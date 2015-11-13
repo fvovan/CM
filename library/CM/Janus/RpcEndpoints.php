@@ -116,6 +116,30 @@ class CM_Janus_RpcEndpoints {
     /**
      * @param string $serverKey
      * @param string $sessionId
+     * @param string $streamChannelKey
+     * @return bool
+     */
+    public static function rpc_canUserSubscribe($serverKey, $sessionId, $streamChannelKey) {
+        $serverKey = (string) $serverKey;
+        $sessionId = (string) $sessionId;
+        $streamChannelKey = (string) $streamChannelKey;
+
+        $janus = CM_Service_Manager::getInstance()->getJanus('janus');
+        self::_authenticate($janus, $serverKey);
+
+        $session = new CM_Session($sessionId);
+        $user = $session->getUser(true);
+
+        $streamRepository = $janus->getStreamRepository();
+        $streamChannel = $streamRepository->findStreamChannelByKey($streamChannelKey);
+
+        $canSubscribeUntil = $streamChannel->canSubscribe($user, time());
+        return $canSubscribeUntil < time();
+    }
+
+    /**
+     * @param string $serverKey
+     * @param string $sessionId
      * @return bool
      */
     public static function rpc_isValidUser($serverKey, $sessionId) {
